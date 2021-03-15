@@ -42,20 +42,6 @@ def find_features(document):
             features['contains({})'.format(w.split()[1])] = False
         return features
 
-# with open("word_features_final.txt", "rb") as fp:
-#             word_features = pickle.load(fp)
-# class Sentiment(Resource):
-    
-#     def get(self,text):  
-#         print(text)
-#         loaded_model = pickle.load(open("SentiAnalysis.sav", 'rb'))
-
-#         feats = find_features(text)
-        
-#         result = loaded_model.classify(feats)
-#         print(result)
-#         return result
-                    
 
 
 # api.add_resource(Sentiment, '/sentiment/<string:text>')
@@ -65,32 +51,6 @@ def get1():
     return("flask server is up and running")
 
 
-
-@app.route("/test/<string:text>",methods=['POST'])
-@cross_origin()
-def get(text):  
-        print(text)
-        loaded_model = pickle.load(open("SentiAnalysisfinal.sav", 'rb'))
-        feats = find_features(text)        
-        result = loaded_model.classify(feats)
-        user_collection.insert_one({"status": result})
-        print(result)
-        return jsonify({'ModelResponse': result})
-    
-
-@app.route("/test2",methods=['GET'])
-@cross_origin()
-def getty():
-    positive = user_collection.count_documents({"status":"positive"})    
-    negative = user_collection.count_documents({"status":"negative"})
-    print(positive)
-    print(negative)
-    res = {}
-    res['Positive'] = positive
-    res['Negative'] = negative    
-    return jsonify(res)
-    # db.db.collection.insert_one({"name": "John"})
-    # return "Connected to the data base!"
     
     
 
